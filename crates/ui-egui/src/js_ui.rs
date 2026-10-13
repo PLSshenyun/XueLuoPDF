@@ -22,11 +22,30 @@ pub struct DocJsDraft {
     pub script: String,
 }
 
+/// What the user is told when a form's scripts were turned off: in a toast as it happens, then
+/// on the notice bar for as long as the document is open.
+pub(crate) fn scripts_off_notice() -> String {
+    tl!("This form's scripts are turned off because one ran too long. Reopen the document to run them again.").to_string()
+}
+
 impl XueLuoPDFApp {
     /// Act on what scripts produced in document `id`: alerts are shown, console output goes to
     /// the console, print and page requests are carried out, links wait for the user's permission
     /// (form submissions are reported, never sent).
     pub fn handle_js(&mut self, id: DocId, out: JsOutput) {
+        let view = self.views.iter().position(|v| v.id == id);
+        // A script that ran away turned the form's scripts off: calculations and buttons stop
+        // working, and the error is only in the console. Say so once, and bring the notice bar
+        // (which keeps saying so) back if it was closed. A message of the form's own, below,
+        // takes the toast's place.
+        if let Some(v) = view.and_then(|i| self.views.get_mut(i))
+            && !v.scripts_off_noted
+            && self.session.get(id).is_some_and(|d| d.xfa_scripts_off())
+        {
+            v.scripts_off_noted = true;
+            v.notice_dismissed = false;
+            self.notify(scripts_off_notice());
+        }
         if out.is_empty() {
             return;
         }
@@ -34,7 +53,6 @@ impl XueLuoPDFApp {
         for e in &out.errors {
             self.js_console.log.push(format!("Error: {e}"));
         }
-        let view = self.views.iter().position(|v| v.id == id);
         for r in out.requests {
             match r {
                 Request::Print => self.open_print(),
@@ -377,6 +395,11 @@ pub(crate) fn preferences_body(ui: &mut egui::Ui, app: &mut XueLuoPDFApp, t: &To
             widgets::radio_value(ui, &mut app.animation_effects, choice, tl_ctx!("animation effects", choice.label()));
         }
     });
+    // Only where the app draws the title bar (GNOME on Wayland); elsewhere the desktop draws it.
+    if app.window_controls.is_some() {
+        ui.add(widgets::checkbox(&mut app.system_title_bar, tl!("Use system title bar")))
+            .on_hover_text(tl!("Show a basic title bar for the window buttons instead of the tab strip. GNOME doesn't draw title bars for apps, so this one doesn't follow its theme."));
+    }
     ui.add_space(8.0);
     // Reading colours (Acrobat: Replace Document Colors): solid text and line-art paints are
     // remapped while rendering, and the page clears to the background colour. The preference

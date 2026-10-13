@@ -6,7 +6,7 @@
 # French computing vocabulary (formal "vous", infinitive for commands). No proprietary localisation
 # resource, string table or product UI (Acrobat's included) was consulted or copied; add entries
 # the same way.
-# Product and technology names (XueLuoPDF, PDF, Acrobat JavaScript ...) are not translated;
+# Product and technology names (PdfCraft, PDF, Acrobat JavaScript ...) are not translated;
 # the trailing "…" of dialog commands is kept.
 
 	Menu	Menu
@@ -196,6 +196,9 @@
 	Add or edit links	Ajouter ou modifier des liens
 	Create links from URLs	Créer des liens à partir des URL
 	Remove all links	Retirer tous les liens
+	No links to remove	Aucun lien à retirer
+	Removed 1 link	1 lien retiré
+	Removed {n} links	Liens retirés : {n}
 	Add Bates numbering…	Ajouter une numérotation Bates…
 	Add image…	Ajouter une image…
 	Redact text and images	Biffer du texte et des images
@@ -727,6 +730,12 @@
 	Flip Vertical	Retourner verticalement
 	Replace Image…	Remplacer l'image…
 	Save Image As…	Enregistrer l'image sous…
+	Copy Image	Copier l'image
+	The image has been copied ({w} × {h} pixels)	L'image a été copiée ({w} × {h} pixels)
+	Couldn't copy the image: {e}	Impossible de copier l'image : {e}
+	Copy Image in Original Format	Copier l'image au format d'origine
+	The image has been copied as a {ext} file	L'image a été copiée en tant que fichier {ext}
+	The page has changed; select the image again	La page a changé ; sélectionnez de nouveau l'image
 	Check for updates	Rechercher des mises à jour
 	No check has run yet.	Aucune vérification n'a encore été faite.
 	Checking for a newer version…	Recherche d'une version plus récente…
@@ -816,6 +825,7 @@
 	, Expires: 	, expire : 
 	No digital IDs yet.	Aucun ID numérique pour l'instant.
 	Configure New Digital ID	Configurer un nouvel ID numérique
+	Remove "{name}" from this list? The file itself is not deleted.	Retirer « {name} » de cette liste ? Le fichier lui-même n’est pas supprimé.
 	Continue	Continuer
 	Configure a Digital ID for Signing	Configurer un ID numérique pour signer
 	Use a Digital ID from a file	Utiliser un ID numérique provenant d'un fichier
@@ -1954,6 +1964,7 @@
 	DPI sets the printed page size without resampling the image.	Les PPP déterminent la taille de la page imprimée sans rééchantillonner l'image.
 	Create	Créer
 	Dynamic XFA form laid out from its template: {pages}, {fields}.	Formulaire XFA dynamique mis en page à partir de son modèle : {pages}, {fields}.
+	This form's scripts are turned off because one ran too long. Reopen the document to run them again.	Les scripts de ce formulaire sont désactivés, car l'un d'eux s'est exécuté trop longtemps. Rouvrez le document pour les exécuter à nouveau.
 	XFA form: its fields and its XFA data are kept in step, so other viewers show what you fill in.	Formulaire XFA : ses champs et ses données XFA restent synchronisés, afin que les autres visionneuses affichent ce que vous remplissez.
 @plural	{n} page|{n} pages	{n} page|{n} pages
 @plural	{n} field|{n} fields	{n} champ|{n} champs
@@ -2311,11 +2322,30 @@ animation effects	Off	Désactivés
 	Ink sensitivity	Sensibilité à l’encre
 	No signature was found in the frame. Move the frame over the signature or raise the ink sensitivity.	Aucune signature trouvée dans le cadre. Placez le cadre sur la signature ou augmentez la sensibilité à l’encre.
 	Couldn't use the photo: {e}	Impossible d’utiliser la photo : {e}
+
+# PDF tab context menu (#1233)
+	Close Tab	Fermer l’onglet
+	Reopen Closed Tab	Rouvrir l’onglet fermé
+	Reveal in Finder	Afficher dans le Finder
+	Reveal in File Explorer	Afficher dans l’explorateur de fichiers
 	Other colour…	Autre couleur…
 	Recent colours	Couleurs récentes
 	Couldn't follow linked PDF: {reason}	Impossible de suivre le PDF lié : {reason}
 	The linked PDF opened, but its named destination was not applied.	Le PDF lié s'est ouvert, mais sa destination nommée n'a pas été appliquée.
 	The linked PDF opened, but its page destination was out of range.	Le PDF lié s'est ouvert, mais sa page de destination est hors limites.
 	Local cross-PDF links require the desktop app	Les liens locaux entre PDF nécessitent l'application de bureau
+	Minimize	Réduire
+	Maximize	Agrandir
+	Restore	Restaurer
+	Use system title bar	Utiliser la barre de titre du système
+	Show a basic title bar for the window buttons instead of the tab strip. GNOME doesn't draw title bars for apps, so this one doesn't follow its theme.	Afficher une barre de titre simple pour les boutons de la fenêtre au lieu de la barre d’onglets. GNOME ne dessine pas de barre de titre pour les applications : celle-ci ne suit donc pas son thème.
+
+# Absolute local GoToR confirmation (#1364).
+	Allow	Autoriser
+	Only allow this if you trust the source document.	N'autorisez cette action que si vous faites confiance au document source.
+	Open this local PDF?	Ouvrir ce PDF local ?
+	This document is trying to open a local file:	Ce document tente d’ouvrir un fichier local :
+	Move tag earlier	Déplacer la balise plus tôt
+	Move tag later	Déplacer la balise plus tard
 	Join the XueLuoPDF community	Rejoindre la communauté XueLuoPDF
 	XueLuoPDF icon	Icône XueLuoPDF

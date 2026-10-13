@@ -5,7 +5,7 @@
 # Clean-room: every entry was written from the plain meaning of the English label using ordinary
 # Slovene computing vocabulary. No proprietary localisation resource, string table or product UI
 # (Acrobat's included) was consulted or copied; add entries the same way.
-# Product and technology names (XueLuoPDF, PDF, Acrobat JavaScript ...) are not translated;
+# Product and technology names (PdfCraft, PDF, Acrobat JavaScript ...) are not translated;
 # the trailing "…" of dialog commands is kept.
 
 	Menu	Meni
@@ -424,6 +424,7 @@
 	Compress document structure (object streams)	Stisni strukturo dokumenta (tokovi objektov)
 	Compression	Stiskanje
 	Configure New Digital ID	Nastavi novo digitalno identiteto
+	Remove "{name}" from this list? The file itself is not deleted.	Odstranim »{name}« s tega seznama? Sama datoteka ne bo izbrisana.
 	Configure a Digital ID for Signing	Nastavite digitalno identiteto za podpisovanje
 	Confirm Password	Potrdite geslo
 	Conformance level:	Raven skladnosti:
@@ -653,6 +654,7 @@
 	Duplicate…	Podvoji…
 	Dynamic	Dinamično
 	Dynamic XFA form laid out from its template: {pages}, {fields}.	Dinamični obrazec XFA, razporejen iz predloge: {pages}, {fields}.
+	This form's scripts are turned off because one ran too long. Reopen the document to run them again.	Skripti tega obrazca so izklopljeni, ker se je eden izvajal predolgo. Če jih želite znova zagnati, znova odprite dokument.
 	E-Sign	E-podpis
 	Each field needs a tooltip that says what to enter. Add one in Field Properties > General > Tooltip.	Vsako polje potrebuje namig, ki pove, kaj vnesti. Dodajte ga v Lastnosti polja > Splošno > Namig.
 	Each file holds as many of the {n} pages as fit.	Vsaka datoteka vsebuje toliko od {n} strani, kot jih gre vanjo.
@@ -1424,6 +1426,9 @@
 	Reliable character encoding is provided	Zagotovljeno je zanesljivo kodiranje znakov
 	Remove	Odstrani
 	Remove all links	Odstrani vse povezave
+	No links to remove	Ni povezav za odstranitev
+	Removed 1 link	Odstranjena je 1 povezava
+	Removed {n} links	Odstranjene povezave: {n}
 	Remove background	Odstrani ozadje
 	Remove checkmark	Odstrani kljukico
 	Remove from Recent	Odstrani iz nedavnih
@@ -1527,6 +1532,12 @@
 	Save & Close	Shrani in zapri
 	Save (M4)	Shrani (M4)
 	Save Image As…	Shrani sliko kot…
+	Copy Image	Kopiraj sliko
+	The image has been copied ({w} × {h} pixels)	Slika je kopirana ({w} × {h} slikovnih pik)
+	Couldn't copy the image: {e}	Slike ni bilo mogoče kopirati: {e}
+	Copy Image in Original Format	Kopiraj sliko v izvirni obliki
+	The image has been copied as a {ext} file	Slika je kopirana kot datoteka {ext}
+	The page has changed; select the image again	Stran se je spremenila; znova izberite sliko
 	Save as PDF	Shrani kot PDF
 	Save as PDF/A	Shrani kot PDF/A
 	Save as PDF/A-1b	Shrani kot PDF/A-1b
@@ -2316,11 +2327,30 @@ animation effects	Off	Izklopljeni
 	Ink sensitivity	Občutljivost za črnilo
 	No signature was found in the frame. Move the frame over the signature or raise the ink sensitivity.	V okvirju ni bilo najdenega podpisa. Premaknite okvir nad podpis ali povečajte občutljivost za črnilo.
 	Couldn't use the photo: {e}	Fotografije ni bilo mogoče uporabiti: {e}
+
+# PDF tab context menu (#1233)
+	Close Tab	Zapri zavihek
+	Reopen Closed Tab	Znova odpri zaprti zavihek
+	Reveal in Finder	Prikaži v Finderju
+	Reveal in File Explorer	Prikaži v upravljalniku datotek
 	Other colour…	Druga barva…
 	Recent colours	Nedavne barve
 	Couldn't follow linked PDF: {reason}	Povezanega PDF-ja ni bilo mogoče odpreti: {reason}
 	The linked PDF opened, but its named destination was not applied.	Povezani PDF se je odprl, vendar njegov poimenovani cilj ni bil uporabljen.
 	The linked PDF opened, but its page destination was out of range.	Povezani PDF se je odprl, vendar je ciljna stran zunaj obsega.
 	Local cross-PDF links require the desktop app	Lokalne povezave med PDF-ji zahtevajo namizno aplikacijo
+	Minimize	Pomanjšaj
+	Maximize	Povečaj
+	Restore	Obnovi
+	Use system title bar	Uporabi sistemsko naslovno vrstico
+	Show a basic title bar for the window buttons instead of the tab strip. GNOME doesn't draw title bars for apps, so this one doesn't follow its theme.	Prikaži preprosto naslovno vrstico za gumbe okna namesto vrstice zavihkov. GNOME aplikacijam ne riše naslovnih vrstic, zato ta ne sledi njegovi temi.
+
+# Absolute local GoToR confirmation (#1364).
+	Allow	Dovoli
+	Only allow this if you trust the source document.	To dovolite le, če zaupate izvornemu dokumentu.
+	Open this local PDF?	Želite odpreti ta lokalni PDF?
+	This document is trying to open a local file:	Ta dokument poskuša odpreti lokalno datoteko:
+	Move tag earlier	Premakni oznako prej
+	Move tag later	Premakni oznako pozneje
 	Join the XueLuoPDF community	Pridružite se skupnosti XueLuoPDF
 	XueLuoPDF icon	Ikona XueLuoPDF

@@ -15,7 +15,7 @@
 # localisation or any other product's translation. Terminology: annotations are "komentáře",
 # pages are "stránky", form fields are "formulářová pole", redaction is "začernění", flattening is
 # "sloučení se stránkou", tags are "tagy" (to tag = "označkovat"). Product and format names
-# (XueLuoPDF, PDF, PDF/A, OCR, XFA, Word, HTML…) stay in Latin letters; the trailing "…" of dialog
+# (PdfCraft, PDF, PDF/A, OCR, XFA, Word, HTML…) stay in Latin letters; the trailing "…" of dialog
 # commands is kept. Messages with a count but no `@plural` entry use count-neutral wording
 # ("Vybráno stránek: {n}"), because Czech has three plural forms.
 
@@ -338,6 +338,9 @@ key	Space	Mezerník
 	Add or edit links	Přidat nebo upravit odkazy
 	Create links from URLs	Vytvořit odkazy z adres URL
 	Remove all links	Odebrat všechny odkazy
+	No links to remove	Nejsou žádné odkazy k odebrání
+	Removed 1 link	Odebrán 1 odkaz
+	Removed {n} links	Odebrané odkazy: {n}
 	Add Bates numbering…	Přidat Batesovo číslování…
 	Add image…	Přidat obrázek…
 	Redact text and images	Začernit text a obrázky
@@ -828,6 +831,12 @@ key	Space	Mezerník
 	Flip Vertical	Převrátit svisle
 	Replace Image…	Nahradit obrázek…
 	Save Image As…	Uložit obrázek jako…
+	Copy Image	Kopírovat obrázek
+	The image has been copied ({w} × {h} pixels)	Obrázek byl zkopírován ({w} × {h} pixelů)
+	Couldn't copy the image: {e}	Obrázek nelze zkopírovat: {e}
+	Copy Image in Original Format	Kopírovat obrázek v původním formátu
+	The image has been copied as a {ext} file	Obrázek byl zkopírován jako soubor {ext}
+	The page has changed; select the image again	Stránka se změnila; vyberte obrázek znovu
 	Check for updates	Zkontrolovat aktualizace
 	No check has run yet.	Kontrola zatím neproběhla.
 	Checking for a newer version…	Hledání novější verze…
@@ -916,6 +925,7 @@ key	Space	Mezerník
 	, Expires: 	, platnost do: 
 	No digital IDs yet.	Zatím žádná digitální ID.
 	Configure New Digital ID	Nastavit nové digitální ID
+	Remove "{name}" from this list? The file itself is not deleted.	Odebrat „{name}“ z tohoto seznamu? Samotný soubor se nesmaže.
 	Continue	Pokračovat
 	Configure a Digital ID for Signing	Nastavení digitálního ID pro podepisování
 	Use a Digital ID from a file	Použít digitální ID ze souboru
@@ -2072,6 +2082,7 @@ key	Space	Mezerník
 	DPI sets the printed page size without resampling the image.	DPI určuje velikost tištěné stránky bez převzorkování obrázku.
 	Create	Vytvořit
 	Dynamic XFA form laid out from its template: {pages}, {fields}.	Dynamický formulář XFA rozvržený podle šablony: {pages}, {fields}.
+	This form's scripts are turned off because one ran too long. Reopen the document to run them again.	Skripty tohoto formuláře jsou vypnuté, protože jeden z nich běžel příliš dlouho. Chcete-li je znovu spustit, otevřete dokument znovu.
 	XFA form: its fields and its XFA data are kept in step, so other viewers show what you fill in.	Formulář XFA: jeho pole a data XFA se udržují ve shodě, takže ostatní prohlížeče zobrazí, co vyplníte.
 	Switch to two-page view first to show the cover page	Titulní stránku zobrazíte, až přepnete na dvoustránkové zobrazení
 @plural	{n} page|{n} pages	{n} stránka|{n} stránky|{n} stránek
@@ -2385,11 +2396,30 @@ animation effects	Off	Vypnuto
 	Ink sensitivity	Citlivost na inkoust
 	No signature was found in the frame. Move the frame over the signature or raise the ink sensitivity.	V rámečku nebyl nalezen žádný podpis. Přesuňte rámeček na podpis nebo zvyšte citlivost na inkoust.
 	Couldn't use the photo: {e}	Fotografii nelze použít: {e}
+
+# PDF tab context menu (#1233)
+	Close Tab	Zavřít kartu
+	Reopen Closed Tab	Znovu otevřít zavřenou kartu
+	Reveal in Finder	Zobrazit ve Finderu
+	Reveal in File Explorer	Zobrazit v Průzkumníku souborů
 	Other colour…	Jiná barva…
 	Recent colours	Nedávné barvy
 	Couldn't follow linked PDF: {reason}	Odkazovaný PDF nelze otevřít: {reason}
 	The linked PDF opened, but its named destination was not applied.	Odkazovaný PDF se otevřel, ale jeho pojmenovaný cíl nebyl použit.
 	The linked PDF opened, but its page destination was out of range.	Odkazovaný PDF se otevřel, ale cílová stránka je mimo rozsah.
 	Local cross-PDF links require the desktop app	Místní odkazy mezi soubory PDF vyžadují desktopovou aplikaci
+	Minimize	Minimalizovat
+	Maximize	Maximalizovat
+	Restore	Obnovit
+	Use system title bar	Použít systémové záhlaví okna
+	Show a basic title bar for the window buttons instead of the tab strip. GNOME doesn't draw title bars for apps, so this one doesn't follow its theme.	Zobrazit jednoduché záhlaví s tlačítky okna místo pruhu karet. GNOME aplikacím záhlaví nekreslí, proto toto záhlaví nesleduje jeho motiv.
+
+# Absolute local GoToR confirmation (#1364).
+	Allow	Povolit
+	Only allow this if you trust the source document.	Povolte tuto akci pouze v případě, že důvěřujete zdrojovému dokumentu.
+	Open this local PDF?	Otevřít tento místní soubor PDF?
+	This document is trying to open a local file:	Tento dokument se pokouší otevřít místní soubor:
+	Move tag earlier	Přesunout značku dříve
+	Move tag later	Přesunout značku později
 	Join the XueLuoPDF community	Připojte se ke komunitě XueLuoPDF
 	XueLuoPDF icon	Ikona XueLuoPDF

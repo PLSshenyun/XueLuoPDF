@@ -5,7 +5,7 @@
 # Clean-room: every entry was written from the plain meaning of the English label using ordinary
 # Traditional Chinese computing vocabulary. No proprietary localisation resource, string table or
 # product UI (Acrobat's included) was consulted or copied; add entries the same way.
-# Product and technology names (XueLuoPDF, PDF, Acrobat JavaScript ...) stay in Latin letters;
+# Product and technology names (PdfCraft, PDF, Acrobat JavaScript ...) stay in Latin letters;
 # the trailing "…" of dialog commands is kept.
 
 	Menu	選單
@@ -395,6 +395,12 @@
 	Flip Vertical	垂直翻轉
 	Replace Image…	替換圖片…
 	Save Image As…	圖片另存為…
+	Copy Image	複製圖片
+	The image has been copied ({w} × {h} pixels)	圖片已複製（{w} × {h} 畫素）
+	Couldn't copy the image: {e}	無法複製圖片：{e}
+	Copy Image in Original Format	以原始格式複製圖片
+	The image has been copied as a {ext} file	圖片已複製為 {ext} 檔案
+	The page has changed; select the image again	頁面已變更；請重新選取圖片
 	Check for updates	檢驗更新
 	No check has run yet.	尚未執行檢驗。
 	Checking for a newer version…	正在檢驗新版本…
@@ -483,6 +489,7 @@
 	, Expires: 	，有效期至：
 	No digital IDs yet.	尚無數位 ID。
 	Configure New Digital ID	配置新數位 ID
+	Remove "{name}" from this list? The file itself is not deleted.	從此清單中移除「{name}」？檔案本身不會被刪除。
 	Continue	繼續
 	Configure a Digital ID for Signing	設定簽署用的數位 ID
 	Use a Digital ID from a file	使用檔案中的數位 ID
@@ -1123,6 +1130,9 @@
 	Redact pages…	遮蔽頁面…
 	Redaction properties…	遮蔽內容設定…
 	Remove all links	移除所有連結
+	No links to remove	沒有可移除的連結
+	Removed 1 link	已移除 1 個連結
+	Removed {n} links	已移除 {n} 個連結
 	Remove background	移除背景
 	Remove header & footer	移除頁首與頁尾
 	Remove hidden information…	移除隱藏資訊…
@@ -1678,6 +1688,7 @@
 	At least one signature has problems.	至少一個簽名存在問題。
 	This document is secured. Some changes are restricted by its security settings.	本文件已加密。其安全設定限制了部分更改。
 	This is a dynamic XFA form, which XueLuoPDF can't display yet. What you see is the file's placeholder page.	這是動態 XFA 表單，XueLuoPDF 暫無法顯示。您看到的是檔案的佔位頁面。
+	This form's scripts are turned off because one ran too long. Reopen the document to run them again.	此表單的指令碼已關閉，因為其中一個指令碼執行時間過長。重新開啟文件即可再次執行。
 	This form also contains XFA data, which XueLuoPDF doesn't read yet. You can fill its fields, but Acrobat may show the XFA values instead.	此表單還包含 XFA 資料，XueLuoPDF 暫不讀取。您可以填寫欄位，但 Acrobat 可能顯示 XFA 值。
 	This document contains {n} interactive form fields.	本文件包含 {n} 個互動式表單欄位。
 	This file was damaged and has been repaired. Saving keeps the repaired version.	此檔案已損壞並已修復。儲存將保留修復後的版本。
@@ -2174,6 +2185,12 @@ animation effects	Off	關
 	Ink sensitivity	墨跡靈敏度
 	No signature was found in the frame. Move the frame over the signature or raise the ink sensitivity.	框內找不到簽名。請將框移到簽名上，或提高墨跡靈敏度。
 	Couldn't use the photo: {e}	無法使用此相片：{e}
+
+# PDF tab context menu (#1233)
+	Close Tab	關閉分頁
+	Reopen Closed Tab	重新開啟已關閉的分頁
+	Reveal in Finder	在 Finder 中顯示
+	Reveal in File Explorer	在檔案總管中顯示
 	Other colour…	其他顏色…
 	Recent colours	最近使用的顏色
 	Reading colours	閱讀色彩
@@ -2191,5 +2208,18 @@ animation effects	Off	關
 	The linked PDF opened, but its page destination was out of range.	已開啟連結的 PDF，但其頁面目的地超出範圍。
 	Local cross-PDF links require the desktop app	PDF 之間的本機連結需要桌面應用程式
 	The existing action will be preserved.	將保留現有動作。
+	Minimize	最小化
+	Maximize	最大化
+	Restore	還原
+	Use system title bar	使用系統標題列
+	Show a basic title bar for the window buttons instead of the tab strip. GNOME doesn't draw title bars for apps, so this one doesn't follow its theme.	以簡單的標題列顯示視窗按鈕，而不是在分頁列中。GNOME 不為應用程式繪製標題列，因此此標題列不會跟隨其佈景主題。
+
+# Absolute local GoToR confirmation (#1364).
+	Allow	允許
+	Only allow this if you trust the source document.	只有在您信任來源文件時，才允許此操作。
+	Open this local PDF?	要開啟此本機 PDF 嗎？
+	This document is trying to open a local file:	此文件正嘗試開啟本機檔案：
+	Move tag earlier	將標記前移
+	Move tag later	將標記後移
 	Join the XueLuoPDF community	加入 XueLuoPDF 社群
 	XueLuoPDF icon	XueLuoPDF 圖示

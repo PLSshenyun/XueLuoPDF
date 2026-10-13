@@ -5,7 +5,7 @@
 # Clean-room: every entry was written from the plain meaning of the English label using ordinary
 # Brazilian Portuguese computing vocabulary. No proprietary localisation resource, string table or
 # product UI (Acrobat's included) was consulted or copied; add entries the same way.
-# Product and technology names (XueLuoPDF, PDF, Acrobat JavaScript ...) are not translated;
+# Product and technology names (PdfCraft, PDF, Acrobat JavaScript ...) are not translated;
 # the trailing "…" of dialog commands is kept.
 
 	Menu	Menu
@@ -390,6 +390,12 @@
 	Flip Vertical	Inverter verticalmente
 	Replace Image…	Substituir imagem…
 	Save Image As…	Salvar imagem como…
+	Copy Image	Copiar imagem
+	The image has been copied ({w} × {h} pixels)	A imagem foi copiada ({w} × {h} pixels)
+	Couldn't copy the image: {e}	Não foi possível copiar a imagem: {e}
+	Copy Image in Original Format	Copiar imagem no formato original
+	The image has been copied as a {ext} file	A imagem foi copiada como arquivo {ext}
+	The page has changed; select the image again	A página mudou; selecione a imagem novamente
 	Check for updates	Verificar atualizações
 	No check has run yet.	Nenhuma verificação foi executada ainda.
 	Checking for a newer version…	Verificando se há uma versão mais recente…
@@ -478,6 +484,7 @@
 	, Expires: 	, Expira em: 
 	No digital IDs yet.	Nenhuma ID digital ainda.
 	Configure New Digital ID	Configurar nova ID digital
+	Remove "{name}" from this list? The file itself is not deleted.	Remover "{name}" desta lista? O arquivo em si não é excluído.
 	Continue	Continuar
 	Configure a Digital ID for Signing	Configurar uma ID digital para assinatura
 	Use a Digital ID from a file	Usar uma ID digital de um arquivo
@@ -1116,6 +1123,9 @@
 	Redact pages…	Ocultar páginas…
 	Redaction properties…	Propriedades da ocultação…
 	Remove all links	Remover todos os links
+	No links to remove	Não há links para remover
+	Removed 1 link	1 link removido
+	Removed {n} links	{n} links removidos
 	Remove background	Remover plano de fundo
 	Remove header & footer	Remover cabeçalho e rodapé
 	Remove hidden information…	Remover informações ocultas…
@@ -1940,6 +1950,7 @@
 	DPI sets the printed page size without resampling the image.	O DPI define o tamanho da página impressa sem reamostrar a imagem.
 	Create	Criar
 	Dynamic XFA form laid out from its template: {pages}, {fields}.	Formulário XFA dinâmico formatado a partir de seu modelo: {pages}, {fields}.
+	This form's scripts are turned off because one ran too long. Reopen the document to run them again.	Os scripts deste formulário estão desativados porque um deles demorou demais para ser executado. Reabra o documento para executá-los novamente.
 	XFA form: its fields and its XFA data are kept in step, so other viewers show what you fill in.	Formulário XFA: seus campos e seus dados XFA são mantidos sincronizados, para que outros leitores exibam o que você preencher.
 @plural	{n} page|{n} pages	{n} página|{n} páginas
 @plural	{n} field|{n} fields	{n} campo|{n} campos
@@ -2325,11 +2336,30 @@ animation effects	Off	Desativados
 	Ink sensitivity	Sensibilidade à tinta
 	No signature was found in the frame. Move the frame over the signature or raise the ink sensitivity.	Nenhuma assinatura encontrada no quadro. Mova o quadro sobre a assinatura ou aumente a sensibilidade à tinta.
 	Couldn't use the photo: {e}	Não foi possível usar a foto: {e}
+
+# PDF tab context menu (#1233)
+	Close Tab	Fechar aba
+	Reopen Closed Tab	Reabrir aba fechada
+	Reveal in Finder	Mostrar no Finder
+	Reveal in File Explorer	Mostrar no explorador de arquivos
 	Other colour…	Outra cor…
 	Recent colours	Cores recentes
 	Couldn't follow linked PDF: {reason}	Não foi possível abrir o PDF vinculado: {reason}
 	The linked PDF opened, but its named destination was not applied.	O PDF vinculado foi aberto, mas seu destino nomeado não foi aplicado.
 	The linked PDF opened, but its page destination was out of range.	O PDF vinculado foi aberto, mas sua página de destino está fora do intervalo.
 	Local cross-PDF links require the desktop app	Links locais entre PDFs exigem o aplicativo para desktop
+	Minimize	Minimizar
+	Maximize	Maximizar
+	Restore	Restaurar
+	Use system title bar	Usar a barra de título do sistema
+	Show a basic title bar for the window buttons instead of the tab strip. GNOME doesn't draw title bars for apps, so this one doesn't follow its theme.	Mostrar uma barra de título simples para os botões da janela em vez da barra de abas. O GNOME não desenha barras de título para os aplicativos, então esta não segue o tema dele.
+
+# Absolute local GoToR confirmation (#1364).
+	Allow	Permitir
+	Only allow this if you trust the source document.	Permita esta ação somente se confiar no documento de origem.
+	Open this local PDF?	Abrir este PDF local?
+	This document is trying to open a local file:	Este documento está tentando abrir um arquivo local:
+	Move tag earlier	Mover tag para antes
+	Move tag later	Mover tag para depois
 	Join the XueLuoPDF community	Entrar na comunidade XueLuoPDF
 	XueLuoPDF icon	Ícone do XueLuoPDF

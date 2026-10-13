@@ -5,7 +5,7 @@
 # Clean-room: every entry was written from the plain meaning of the English label using ordinary
 # Russian computing vocabulary. No proprietary localisation resource, string table or product UI
 # (Acrobat's included) was consulted or copied; add entries the same way.
-# Product and technology names (XueLuoPDF, PDF, Acrobat JavaScript ...) are not translated;
+# Product and technology names (PdfCraft, PDF, Acrobat JavaScript ...) are not translated;
 # the trailing "…" of dialog commands is kept.
 
 	Menu	Меню
@@ -216,6 +216,9 @@
 	Add or edit links	Добавить или изменить ссылки
 	Create links from URLs	Создать ссылки из URL
 	Remove all links	Удалить все ссылки
+	No links to remove	Нет ссылок для удаления
+	Removed 1 link	Удалена 1 ссылка
+	Removed {n} links	Удалено ссылок: {n}
 	Add Bates numbering…	Добавить нумерацию Бейтса…
 	Add image…	Добавить изображение…
 	Redact text and images	Скрыть текст и изображения
@@ -747,6 +750,12 @@
 	Flip Vertical	Отразить по вертикали
 	Replace Image…	Заменить изображение…
 	Save Image As…	Сохранить изображение как…
+	Copy Image	Копировать изображение
+	The image has been copied ({w} × {h} pixels)	Изображение скопировано ({w} × {h} пикселей)
+	Couldn't copy the image: {e}	Не удалось скопировать изображение: {e}
+	Copy Image in Original Format	Копировать изображение в исходном формате
+	The image has been copied as a {ext} file	Изображение скопировано как файл {ext}
+	The page has changed; select the image again	Страница изменилась; выберите изображение снова
 	Check for updates	Проверить обновления
 	No check has run yet.	Проверка ещё не выполнялась.
 	Checking for a newer version…	Проверка новой версии…
@@ -836,6 +845,7 @@
 	, Expires: 	, Истекает:
 	No digital IDs yet.	Нет цифровых идентификаторов.
 	Configure New Digital ID	Настроить новый цифровой идентификатор
+	Remove "{name}" from this list? The file itself is not deleted.	Убрать «{name}» из этого списка? Сам файл не удаляется.
 	Continue	Продолжить
 	Configure a Digital ID for Signing	Настроить цифровой идентификатор для подписи
 	Use a Digital ID from a file	Использовать цифровой идентификатор из файла
@@ -2024,6 +2034,7 @@
 	DPI sets the printed page size without resampling the image.	DPI задаёт размер печатной страницы без передискретизации изображения.
 	Create	Создать
 	Dynamic XFA form laid out from its template: {pages}, {fields}.	Динамическая форма XFA, сверстанная по шаблону: {pages}, {fields}.
+	This form's scripts are turned off because one ran too long. Reopen the document to run them again.	Скрипты этой формы выключены: один из них выполнялся слишком долго. Чтобы запустить их снова, откройте документ заново.
 	XFA form: its fields and its XFA data are kept in step, so other viewers show what you fill in.	Форма XFA: её поля и данные XFA синхронизированы, поэтому другие просмотрщики показывают то, что вы заполняете.
 	Switch to two-page view first to show the cover page	Сначала переключитесь в двухстраничный вид, чтобы показать титульную страницу
 	Page display: {layout}	Отображение страниц: {layout}
@@ -2224,11 +2235,30 @@ animation effects	Off	Выкл
 	Ink sensitivity	Чувствительность к чернилам
 	No signature was found in the frame. Move the frame over the signature or raise the ink sensitivity.	В рамке не найдена подпись. Наведите рамку на подпись или увеличьте чувствительность к чернилам.
 	Couldn't use the photo: {e}	Не удалось использовать фото: {e}
+
+# PDF tab context menu (#1233)
+	Close Tab	Закрыть вкладку
+	Reopen Closed Tab	Открыть закрытую вкладку
+	Reveal in Finder	Показать в Finder
+	Reveal in File Explorer	Показать в проводнике
 	Other colour…	Другой цвет…
 	Recent colours	Недавние цвета
 	Couldn't follow linked PDF: {reason}	Не удалось открыть связанный PDF: {reason}
 	The linked PDF opened, but its named destination was not applied.	Связанный PDF открыт, но его именованное назначение не применено.
 	The linked PDF opened, but its page destination was out of range.	Связанный PDF открыт, но страница назначения вне допустимого диапазона.
 	Local cross-PDF links require the desktop app	Локальные ссылки между PDF работают только в настольном приложении
+	Minimize	Свернуть
+	Maximize	Развернуть
+	Restore	Восстановить
+	Use system title bar	Использовать системный заголовок окна
+	Show a basic title bar for the window buttons instead of the tab strip. GNOME doesn't draw title bars for apps, so this one doesn't follow its theme.	Показывать простой заголовок окна с кнопками вместо полосы вкладок. GNOME не рисует заголовки для приложений, поэтому этот заголовок не следует его теме.
+
+# Absolute local GoToR confirmation (#1364).
+	Allow	Разрешить
+	Only allow this if you trust the source document.	Разрешите это действие, только если доверяете исходному документу.
+	Open this local PDF?	Открыть этот локальный PDF?
+	This document is trying to open a local file:	Этот документ пытается открыть локальный файл:
+	Move tag earlier	Переместить тег раньше
+	Move tag later	Переместить тег позже
 	Join the XueLuoPDF community	Присоединяйтесь к сообществу XueLuoPDF
 	XueLuoPDF icon	Значок XueLuoPDF

@@ -9,7 +9,7 @@
 # Style: commands are plain imperatives (సేవ్ చేయి), titles and labels are nouns, sentences are
 # polite (…ఎంచుకోండి). Words Telugu users already say in English keep that form in Telugu script
 # (ఫైల్, పేజీ, జూమ్); a Telugu word is used where it is natural (పత్రం, సంతకం, వ్యాఖ్య).
-# Product and technology names (XueLuoPDF, PDF, Acrobat JavaScript ...) are not translated;
+# Product and technology names (PdfCraft, PDF, Acrobat JavaScript ...) are not translated;
 # the trailing "…" of dialog commands is kept.
 
 	Menu	మెనూ
@@ -200,6 +200,9 @@ comment menu	Edit	సవరించు
 	Add or edit links	లింక్‌లను జోడించు లేదా సవరించు
 	Create links from URLs	URLల నుండి లింక్‌లను సృష్టించు
 	Remove all links	అన్ని లింక్‌లను తీసివేయి
+	No links to remove	తీసివేయడానికి లింక్‌లు లేవు
+	Removed 1 link	1 లింక్ తీసివేయబడింది
+	Removed {n} links	తీసివేసిన లింక్‌లు: {n}
 	Add Bates numbering…	బేట్స్ నంబరింగ్ జోడించు…
 	Add image…	చిత్రాన్ని జోడించు…
 	Redact text and images	టెక్స్ట్‌ను, చిత్రాలను రెడాక్ట్ చేయి
@@ -728,6 +731,12 @@ comment menu	Edit	సవరించు
 	Flip Vertical	నిలువుగా తిరగేయి
 	Replace Image…	చిత్రాన్ని భర్తీ చేయి…
 	Save Image As…	చిత్రాన్ని ఫైల్‌గా సేవ్ చేయి…
+	Copy Image	చిత్రాన్ని కాపీ చేయి
+	The image has been copied ({w} × {h} pixels)	చిత్రం కాపీ చేయబడింది ({w} × {h} పిక్సెల్‌లు)
+	Couldn't copy the image: {e}	చిత్రాన్ని కాపీ చేయడం సాధ్యం కాలేదు: {e}
+	Copy Image in Original Format	చిత్రాన్ని అసలు ఫార్మాట్‌లో కాపీ చేయి
+	The image has been copied as a {ext} file	చిత్రం {ext} ఫైల్‌గా కాపీ చేయబడింది
+	The page has changed; select the image again	పేజీ మారింది; చిత్రాన్ని మళ్లీ ఎంచుకోండి
 	Check for updates	అప్‌డేట్‌ల కోసం తనిఖీ చేయి
 	No check has run yet.	ఇంకా తనిఖీ జరగలేదు.
 	Checking for a newer version…	కొత్త వెర్షన్ కోసం తనిఖీ చేస్తోంది…
@@ -815,6 +824,7 @@ comment menu	Edit	సవరించు
 	, Expires: 	, గడువు: 
 	No digital IDs yet.	ఇంకా డిజిటల్ ఐడీలు ఏవీ లేవు.
 	Configure New Digital ID	కొత్త డిజిటల్ ఐడీని కాన్ఫిగర్ చేయి
+	Remove "{name}" from this list? The file itself is not deleted.	ఈ జాబితా నుండి "{name}"ని తీసివేయాలా? ఫైల్ తొలగించబడదు.
 	Continue	కొనసాగించు
 	Configure a Digital ID for Signing	సంతకం కోసం డిజిటల్ ఐడీని కాన్ఫిగర్ చేయి
 	Use a Digital ID from a file	ఫైల్‌లోని డిజిటల్ ఐడీని ఉపయోగించు
@@ -2213,6 +2223,12 @@ animation effects	Off	ఆఫ్
 	Ink sensitivity	ఇంక్ సున్నితత్వం
 	No signature was found in the frame. Move the frame over the signature or raise the ink sensitivity.	ఫ్రేమ్‌లో సంతకం కనబడలేదు. ఫ్రేమ్‌ను సంతకం మీదకు జరపండి లేదా ఇంక్ సున్నితత్వాన్ని పెంచండి.
 	Couldn't use the photo: {e}	ఫోటోను ఉపయోగించలేకపోయాం: {e}
+
+# PDF tab context menu (#1233)
+	Close Tab	ట్యాబ్‌ను మూసివేయి
+	Reopen Closed Tab	మూసివేసిన ట్యాబ్‌ను మళ్లీ తెరువు
+	Reveal in Finder	Finderలో చూపు
+	Reveal in File Explorer	ఫైల్ ఎక్స్‌ప్లోరర్‌లో చూపు
 	Other colour…	ఇతర రంగు…
 	Recent colours	ఇటీవలి రంగులు
 	Reading colours	చదవడానికి రంగులు
@@ -2230,5 +2246,19 @@ animation effects	Off	ఆఫ్
 	The linked PDF opened, but its page destination was out of range.	లింక్ చేసిన PDF తెరుచుకుంది, కానీ దాని పేజీ గమ్యం పరిధికి వెలుపల ఉంది.
 	Local cross-PDF links require the desktop app	PDFల మధ్య స్థానిక లింక్‌లకు డెస్క్‌టాప్ యాప్ అవసరం
 	The existing action will be preserved.	ఉన్న చర్య అలాగే ఉంచబడుతుంది.
+	This form's scripts are turned off because one ran too long. Reopen the document to run them again.	ఒక స్క్రిప్ట్ చాలా సేపు నడిచినందున ఈ ఫారమ్ స్క్రిప్ట్‌లు ఆపివేయబడ్డాయి. వాటిని మళ్లీ నడపడానికి పత్రాన్ని మళ్లీ తెరవండి.
+	Minimize	కనిష్ఠీకరించు
+	Maximize	గరిష్ఠీకరించు
+	Restore	పునరుద్ధరించు
+	Use system title bar	సిస్టమ్ శీర్షిక పట్టీని ఉపయోగించు
+	Show a basic title bar for the window buttons instead of the tab strip. GNOME doesn't draw title bars for apps, so this one doesn't follow its theme.	ట్యాబ్ పట్టీకి బదులుగా విండో బటన్‌ల కోసం సాధారణ శీర్షిక పట్టీని చూపించు. GNOME యాప్‌లకు శీర్షిక పట్టీలను గీయదు, కాబట్టి ఇది దాని థీమ్‌ను అనుసరించదు.
+
+# Absolute local GoToR confirmation (#1364).
+	Allow	అనుమతించు
+	Only allow this if you trust the source document.	మూల పత్రాన్ని విశ్వసిస్తే మాత్రమే దీన్ని అనుమతించండి.
+	Open this local PDF?	ఈ స్థానిక PDF ఫైల్‌ను తెరవాలా?
+	This document is trying to open a local file:	ఈ పత్రం ఒక స్థానిక ఫైల్‌ను తెరవడానికి ప్రయత్నిస్తోంది:
+	Move tag earlier	ట్యాగ్‌ను ముందుకు తరలించు
+	Move tag later	ట్యాగ్‌ను వెనుకకు తరలించు
 	Join the XueLuoPDF community	XueLuoPDF కమ్యూనిటీలో చేరండి
 	XueLuoPDF icon	XueLuoPDF చిహ్నం
