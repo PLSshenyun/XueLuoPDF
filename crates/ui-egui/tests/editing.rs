@@ -54,6 +54,20 @@ fn organize(pages: usize) -> Harness<'static, XueLuoPDFApp> {
     harness(pages, |app| app.set_option("organize", "on").unwrap())
 }
 
+/// Run frames until `done`, or give up after five seconds. Reading and preparing a document now
+/// happens on `open_worker`'s thread, so a fixed number of frames is a race: the commit (or the
+/// password prompt it pauses at) lands on whichever frame that worker has finished by.
+fn wait_for(h: &mut Harness<'static, XueLuoPDFApp>, what: &str, done: impl Fn(&XueLuoPDFApp) -> bool) {
+    for _ in 0..500 {
+        h.run_steps(1);
+        if done(h.state()) {
+            return;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(10));
+    }
+    panic!("timed out waiting for {what}");
+}
+
 fn type_selection(h: &mut Harness<'static, XueLuoPDFApp>, text: &str) {
     use egui::accesskit::Role;
     h.get_by_role_and_label(Role::TextInput, "Selected pages").click();
@@ -1671,6 +1685,8 @@ fn files_dropped_before_the_pointer_is_known_wait_for_it() {
 fn files_dropped_outside_the_page_grid_still_open_as_documents() {
     let mut h = harness(2, |_| {});
     drop_files(&mut h, vec![Dropped("other.pdf", fixture(1))]);
+    // Opening reads and prepares on the open worker, so wait for the tab, not for a frame count.
+    wait_for(&mut h, "the dropped file to open", |app| app.views.len() == 2);
     h.run_steps(3);
     assert_eq!(h.state().views.len(), 2);
     assert_eq!(texts_of(h.state(), 0), ["Page 1", "Page 2"]);
@@ -1907,6 +1923,8 @@ fn password_prompt_opens_and_security_tab_reports_the_details() {
     field.type_text("pw");
     h.run_steps(2);
     h.key_press(Key::Enter);
+    // The unlocked document is prepared on the open worker: wait for its tab.
+    wait_for(&mut h, "the unlocked document to open", |app| app.password_prompt.is_none() && app.views.len() == 1);
     h.run_steps(4);
     assert_eq!(h.state().views.len(), 1);
     h.state_mut().set_option("dialog", "properties").unwrap();

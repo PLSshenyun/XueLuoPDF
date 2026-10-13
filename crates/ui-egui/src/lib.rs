@@ -1724,6 +1724,30 @@ impl XueLuoPDFApp {
         }
     }
 
+    /// Open `path` and run `command` on it once the document is there. Used by a tool chosen with
+    /// no document open ([`Self::open_then_run`]): the caller has already asked for the file, so
+    /// nothing runs when the read, the preparation or the password fails — the user gets the
+    /// ordinary error for that instead.
+    #[cfg(not(target_arch = "wasm32"))]
+    fn open_path_then_run(&mut self, path: &str, command: &'static str) {
+        let name = std::path::Path::new(path).file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_else(|| path.to_string());
+        let stamp = file_watch::Stamp::at(path);
+        self.startup_superseded = true;
+        if let Err(error) = self.schedule_open(OpenRequest {
+            name: name.clone(),
+            path: Some(path.to_string()),
+            stamp,
+            input: open_worker::Input::Path(std::path::PathBuf::from(path)),
+            password: None,
+            activate: true,
+            after_open: None,
+            recovered: None,
+            then: Some(command),
+        }) {
+            self.notify_fmt("Couldn't open {name}: {e}", &[("name", &name), ("e", &error)]);
+        }
+    }
+
     /// The File ▸ Open picker: PDFs, and images and text that become PDFs.
     #[cfg(not(target_arch = "wasm32"))]
     fn open_picker() -> rfd::AsyncFileDialog {
@@ -1972,14 +1996,10 @@ impl XueLuoPDFApp {
         let command = spec.id;
         self.ask_one(pickers::Ask::File(dialog), None, move |app, path| {
             let path = path.to_string_lossy().into_owned();
-            let before = app.views.len();
-            app.open_path(&path);
-            if let Some(prompt) = app.password_prompt.as_mut().filter(|p| p.path.as_deref() == Some(path.as_str())) {
-                // Encrypted: the tool runs once the password is in.
-                prompt.then = Some(command);
-            } else if app.views.len() > before && app.active.is_some() {
-                app.execute(command);
-            }
+            // Reading and preparing happen on the open worker, so the command runs when that
+            // document is committed (or, for an encrypted file, once its password is in). An
+            // open is never inline here: by the time a picker answers, the app is live.
+            app.open_path_then_run(&path, command);
         });
     }
 

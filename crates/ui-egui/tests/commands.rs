@@ -44,6 +44,33 @@ fn harness() -> Harness<'static, XueLuoPDFApp> {
     h
 }
 
+/// A harness over an app built here; the caller gets the closure so it can set preferences or
+/// `pick_override` before the first frame.
+fn harness_with(setup: impl FnOnce(&mut XueLuoPDFApp) + 'static) -> Harness<'static, XueLuoPDFApp> {
+    let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
+        let mut app = XueLuoPDFApp::new();
+        app.set_option("language", "en").unwrap();
+        setup(&mut app);
+        app
+    });
+    h.run_steps(2);
+    h
+}
+
+/// Run frames until `done`, or give up after five seconds. Reading and preparing a document now
+/// happens on `open_worker`'s thread, so a fixed number of frames is a race: the commit lands on
+/// whichever frame the worker has finished by.
+fn wait_until(h: &mut Harness<'static, XueLuoPDFApp>, what: &str, done: impl Fn(&XueLuoPDFApp) -> bool) {
+    for _ in 0..500 {
+        h.run_steps(1);
+        if done(h.state()) {
+            return;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(10));
+    }
+    panic!("timed out waiting for {what}");
+}
+
 /// Commands that open a native file picker can't run headless.
 /// (Create ▸ Clipboard reads the system clipboard: tests use `create_from_clip`.)
 const PICKERS: &[&str] = &[
@@ -175,26 +202,15 @@ fn a_tool_chosen_with_no_document_asks_for_one_and_runs_on_it() {
     let path = dir.join("picked.pdf");
     std::fs::write(&path, fixture(2)).unwrap();
     let pick = path.to_string_lossy().into_owned();
-    let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(move |_cc| {
-        let mut app = XueLuoPDFApp::new();
-        app.set_option("language", "en").unwrap();
-        app.pick_override = Some(vec![pick]);
-        app
-    });
-    h.run_steps(2);
+    let mut h = harness_with(move |app| app.pick_override = Some(vec![pick]));
     h.state_mut().run_command("export.text");
     assert!(h.state().toast.as_ref().is_none_or(|t| t.0 != "Open a document first"));
-    h.run_steps(3);
+    // The picked file is read and prepared on the open worker, so wait for it to commit.
+    wait_until(&mut h, "the picked file to open", |app| app.active.is_some());
     assert!(h.state().active.is_some(), "the picked file is open");
     assert!(matches!(h.state().dialog, Some(Dialog::Export(_))), "and the tool runs on it: {:?}", h.state().dialog);
     // Cancelled: nothing opens and nothing runs.
-    let mut h = Harness::builder().with_size(egui::vec2(1400.0, 900.0)).build_eframe(|_cc| {
-        let mut app = XueLuoPDFApp::new();
-        app.set_option("language", "en").unwrap();
-        app.pick_override = Some(Vec::new());
-        app
-    });
-    h.run_steps(2);
+    let mut h = harness_with(|app| app.pick_override = Some(Vec::new()));
     h.state_mut().run_command("export.text");
     h.run_steps(3);
     assert!(h.state().active.is_none() && h.state().dialog.is_none());
@@ -287,7 +303,8 @@ fn the_open_recent_menu_lists_files_and_opens_one() {
     h.get_by_label("Open Recent ⏵").hover();
     h.run_steps(3);
     h.get_by_label_contains("recent.pdf").click();
-    h.run_steps(4);
+    // The file is read and prepared on the open worker: wait for the tab, not for a frame count.
+    wait_until(&mut h, "the recent file to open in a new tab", |app| app.views.len() == 2);
     let app = h.state();
     assert_eq!(app.views.len(), 2, "the recent file opened in a new tab");
     let active = app.active.unwrap();

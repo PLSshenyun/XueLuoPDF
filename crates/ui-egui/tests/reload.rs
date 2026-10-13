@@ -95,6 +95,19 @@ fn dirty(h: &Harness<'static, XueLuoPDFApp>) -> bool {
     app.session.get(app.views[0].id).unwrap().dirty
 }
 
+/// Run frames until `done`, or give up after five seconds. The change-on-disk notice comes from
+/// the file watcher, whose event arrives on its own schedule, so a fixed number of frames races it.
+fn wait_for(h: &mut Harness<'static, XueLuoPDFApp>, what: &str, done: impl Fn(&XueLuoPDFApp) -> bool) {
+    for _ in 0..500 {
+        h.run_steps(1);
+        if done(h.state()) {
+            return;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(10));
+    }
+    panic!("timed out waiting for {what}");
+}
+
 fn rotate_first_page(h: &mut Harness<'static, XueLuoPDFApp>) {
     h.state_mut().views[0].select_pages(&[0]);
     h.state_mut().apply_edit(pdfcraft_engine::Edit::RotatePages { pages: vec![0], degrees: 90 });
@@ -153,7 +166,7 @@ fn unsaved_changes_are_kept_until_reload_is_chosen() {
     let mut h = harness(&file.path);
     rotate_first_page(&mut h);
     file.rebuild(&fixture(4));
-    h.run_steps(3);
+    wait_for(&mut h, "the changed-on-disk notice", |app| app.views[0].disk_changed);
     assert_eq!((pages(&h), dirty(&h)), (2, true), "not replaced behind the user's back");
     h.get_by_label_contains("This file changed on disk");
     h.get_by_label("Reload").click();

@@ -71,6 +71,20 @@ fn harness(s: RecoveryStore) -> Harness<'static, XueLuoPDFApp> {
     h
 }
 
+/// Run frames until `done`, or give up after five seconds. A recovered snapshot, and the password
+/// that unlocks one, are read and prepared on `open_worker`'s thread now, so a fixed number of
+/// frames is a race: the restored document lands on whichever frame that worker has finished by.
+fn wait_for(h: &mut Harness<'static, XueLuoPDFApp>, what: &str, done: impl Fn(&XueLuoPDFApp) -> bool) {
+    for _ in 0..500 {
+        h.run_steps(1);
+        if done(h.state()) {
+            return;
+        }
+        std::thread::sleep(std::time::Duration::from_millis(10));
+    }
+    panic!("timed out waiting for {what}");
+}
+
 #[test]
 fn a_crashed_session_is_offered_and_recovered_unsaved() {
     let s = store("recover");
@@ -80,6 +94,8 @@ fn a_crashed_session_is_offered_and_recovered_unsaved() {
     h.get_by_label("Recover unsaved documents?");
     h.get_by_label("work.pdf");
     h.get_by_label("Recover").click();
+    // The snapshot is read and prepared on the open worker: wait for the recovered tab.
+    wait_for(&mut h, "the snapshot to be recovered", |app| app.views.len() == 1);
     h.run_steps(4);
     let app = h.state();
     assert_eq!(app.views.len(), 1);
@@ -180,12 +196,15 @@ fn encrypted_documents_are_autosaved_encrypted_and_recovered_with_the_password()
     let mut h = harness(s.clone());
     h.get_by_label_contains("password-protected");
     h.get_by_label("Recover").click();
-    h.run_steps(3);
+    // The snapshot is read on the open worker, so its password prompt appears a frame or two later.
+    wait_for(&mut h, "the snapshot's password prompt", |app| app.password_prompt.is_some());
     let field = h.get_by_role(Role::PasswordInput);
     field.focus();
     field.type_text("pw");
     h.run_steps(2);
     h.key_press(Key::Enter);
+    // The unlocked snapshot is prepared on the open worker: wait for the restored tab.
+    wait_for(&mut h, "the recovered snapshot to open", |app| app.password_prompt.is_none() && app.views.len() == 1);
     h.run_steps(4);
     let app = h.state();
     assert_eq!(app.views.len(), 1);
@@ -205,16 +224,23 @@ fn a_cancelled_recovery_password_does_not_attach_to_the_next_unlocked_document()
     assert_eq!(s.list().len(), 1);
     let mut h = harness(s.clone());
     h.get_by_label("Recover").click();
-    h.run_steps(3);
+    // The snapshot is read on the open worker, so its password prompt appears a frame or two later.
+    wait_for(&mut h, "the snapshot's password prompt", |app| app.password_prompt.is_some());
     assert!(h.state().password_prompt.is_some(), "the snapshot asks for its password");
-    h.get_by_label("Cancel").click();
+    // Cancelling the prompt (what the dialog's Cancel button does).
+    h.state_mut().submit_password(None);
     h.run_steps(3);
     assert!(h.state().password_prompt.is_none());
+    assert!(h.state().views.is_empty());
     assert!(h.state().views.is_empty());
 
     let app = h.state_mut();
     app.open_bytes("B.pdf", Some("/docs/B.pdf".into()), encrypted(fixture(1), "pw-b")).unwrap();
     app.submit_password(Some("pw-b".into()));
+    // B is prepared on the open worker, and the snapshot's offer may come back on a later frame.
+    wait_for(&mut h, "B to open with the snapshot still on offer", |app| {
+        app.views.len() == 1 && app.recoverable.len() == 1
+    });
     h.run_steps(3);
     let app = h.state();
     assert_eq!(app.views.len(), 1);
@@ -291,6 +317,8 @@ fn missing_corrupt_or_mismatched_metadata_recovers_the_snapshot_without_an_origi
         }
         let mut h = harness(s.clone());
         h.get_by_label("Recover").click();
+        // A recovery without a password still reads and prepares on the open worker.
+        wait_for(&mut h, "the snapshot to be recovered", |app| app.views.len() == 1);
         h.run_steps(4);
         let app = h.state();
         assert_eq!(app.views.len(), 1, "{case}");
@@ -316,13 +344,16 @@ fn an_encrypted_snapshot_without_metadata_still_requires_its_password() {
     std::fs::remove_file(s.dir().join(format!("{}.json", meta.key))).unwrap();
     let mut h = harness(s.clone());
     h.get_by_label("Recover").click();
-    h.run_steps(3);
+    // The snapshot is read on the open worker: wait for the prompt, and assert nothing opened.
+    wait_for(&mut h, "the snapshot's password prompt", |app| app.password_prompt.is_some());
     assert!(h.state().views.is_empty());
     let field = h.get_by_role(Role::PasswordInput);
     field.focus();
     field.type_text("pw");
     h.run_steps(2);
     h.key_press(Key::Enter);
+    // The unlocked snapshot is prepared on the open worker: wait for the restored tab.
+    wait_for(&mut h, "the recovered snapshot to open", |app| app.password_prompt.is_none() && app.views.len() == 1);
     h.run_steps(4);
     let app = h.state();
     assert_eq!(app.views.len(), 1);
