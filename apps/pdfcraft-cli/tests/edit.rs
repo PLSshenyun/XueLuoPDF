@@ -133,7 +133,7 @@ mod one_based_arguments {
                 ] {
                     let out = Command::new(BIN).current_dir(&dir.0).args([command, input, "--out", destination, option, value]).output().unwrap();
                     assert_eq!(out.status.code(), Some(1), "{command} {input} {option} {value}");
-                    assert_eq!(out.stderr, format!("pdfcraft-cli: {diagnostic}\n").as_bytes());
+                    assert_eq!(out.stderr, format!("xueluopdf-cli: {diagnostic}\n").as_bytes());
                     assert!(out.stdout.is_empty());
                     assert_eq!(std::fs::read(dir.0.join("input.pdf")).unwrap(), source);
                     assert_eq!(std::fs::read(dir.0.join("output.pam")).unwrap(), b"keep destination");

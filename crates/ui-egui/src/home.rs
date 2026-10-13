@@ -22,12 +22,29 @@ pub fn show(app: &mut XueLuoPDFApp, ui: &mut egui::Ui) {
     let t = Tokens::get(ui.ctx());
     egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| {
         egui::Frame::NONE.inner_margin(egui::Margin { left: 36, right: 36, top: 28, bottom: 28 }).show(ui, |ui| {
-            ui.label(egui::RichText::new(tl!("Welcome to XueLuoPDF")).font(theme::semibold(24.0)));
-            ui.label(
-                egui::RichText::new(tl!("An open-source PDF workbench — local, private, and scriptable."))
-                    .color(t.text_muted)
-                    .font(theme::regular(14.0)),
-            );
+            ui.horizontal(|ui| {
+                // The app's own icon: the same artwork the executable carries (assets/app-icon),
+                // clipped to a circle so it reads as a mark on the page.
+                let logo = egui::Image::from_bytes(
+                    "bytes://xueluopdf-app-icon",
+                    include_bytes!("../../../assets/app-icon/hicolor/64x64/apps/ai.storyteller.xueluopdf.png"),
+                )
+                .fit_to_exact_size(vec2(56.0, 56.0))
+                .corner_radius(28)
+                .alt_text(tl!("XueLuoPDF icon"));
+                ui.add(logo);
+                ui.add_space(12.0);
+                ui.vertical(|ui| {
+                    // Nudge the two lines down so they sit centred against the 56 pt icon.
+                    ui.add_space(12.0);
+                    ui.label(egui::RichText::new(tl!("Welcome to XueLuoPDF")).font(theme::semibold(24.0)));
+                    ui.label(
+                        egui::RichText::new(tl!("An open-source PDF workbench — local, private, and scriptable."))
+                            .color(t.text_muted)
+                            .font(theme::regular(14.0)),
+                    );
+                });
+            });
             ui.add_space(14.0);
             egui::Frame::NONE
                 .fill(t.card)

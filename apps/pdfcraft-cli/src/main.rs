@@ -1,4 +1,4 @@
-//! pdfcraft-cli — headless PdfCraft.
+//! xueluopdf-cli — headless XueLuoPDF (the crate is still `pdfcraft-cli`).
 //!
 //! Usage: `xueluopdf-cli --help`, which prints `USAGE` below.
 //!
@@ -31,7 +31,7 @@ use pdfcraft_render::{PageRenderer, RenderConfig, RenderRequest, RequestKind, in
 macro_rules! mcp_usage {
     () => {
         "\
-pdfcraft-cli mcp    [--root DIR] [--compact]              MCP server on stdin/stdout (opt-in)
+xueluopdf-cli mcp    [--root DIR] [--compact]              MCP server on stdin/stdout (opt-in)
                                                            --compact lists a core set of tools plus tool_search and tool_call
 "
     };
@@ -46,23 +46,23 @@ macro_rules! mcp_usage {
 /// The full usage, printed by `--help` (also after a command, e.g. `render --help`).
 const USAGE: &str = concat!(
     "\
-pdfcraft-cli info   <file.pdf> [--password PW]            document summary as JSON
-pdfcraft-cli render <file.pdf> --page N [--dpi 96] --out x.png   (.png, .jpg, .tif or .pam)
-pdfcraft-cli text   <file.pdf> [--page N]                  extracted text (pages separated by form feeds)
-pdfcraft-cli edit   <in.pdf> --out out.pdf [--rotate 1,3:90] [--delete 2,4] [--move 5:1]
+xueluopdf-cli info   <file.pdf> [--password PW]            document summary as JSON
+xueluopdf-cli render <file.pdf> --page N [--dpi 96] --out x.png   (.png, .jpg, .tif or .pam)
+xueluopdf-cli text   <file.pdf> [--page N]                  extracted text (pages separated by form feeds)
+xueluopdf-cli edit   <in.pdf> --out out.pdf [--rotate 1,3:90] [--delete 2,4] [--move 5:1]
                       [--insert-blank 1] [--title T] [--author A] [--full]
-pdfcraft-cli combine <a.pdf> <b.pdf> … --out combined.pdf
-pdfcraft-cli extract <in.pdf> --pages 1,3,5 --out out.pdf
-pdfcraft-cli split   <in.pdf> (--every N | --before 3,7) [--out-dir DIR]
-pdfcraft-cli check  <files or dirs…> [--timeout 20] [--dpi 36] [--json out.json]
-pdfcraft-cli audit  <file.pdf> [--password PW]            find faux redactions (fails when found)
-pdfcraft-cli tools                                       automation tools and their JSON Schemas
-pdfcraft-cli run    <tool> [key=value …] [--root DIR] [--out image.png]
-pdfcraft-cli run    --script steps.json [--root DIR]      [{\"tool\": \"doc_open\", \"args\": {…}}, …]
+xueluopdf-cli combine <a.pdf> <b.pdf> … --out combined.pdf
+xueluopdf-cli extract <in.pdf> --pages 1,3,5 --out out.pdf
+xueluopdf-cli split   <in.pdf> (--every N | --before 3,7) [--out-dir DIR]
+xueluopdf-cli check  <files or dirs…> [--timeout 20] [--dpi 36] [--json out.json]
+xueluopdf-cli audit  <file.pdf> [--password PW]            find faux redactions (fails when found)
+xueluopdf-cli tools                                       automation tools and their JSON Schemas
+xueluopdf-cli run    <tool> [key=value …] [--root DIR] [--out image.png]
+xueluopdf-cli run    --script steps.json [--root DIR]      [{\"tool\": \"doc_open\", \"args\": {…}}, …]
 ",
     mcp_usage!(),
     "\
-pdfcraft-cli ui     --control FILE <method> [key=value …] [--out shot.png]
+xueluopdf-cli ui     --control FILE <method> [key=value …] [--out shot.png]
                                                            drive a running app started with --control FILE
 issues and source: https://github.com/PLSshenyun/xueluopdf"
 );
@@ -101,7 +101,7 @@ fn main() -> ExitCode {
         Ok(()) => ExitCode::SUCCESS,
         Err(CliError::Stdout(e)) if e.kind() == std::io::ErrorKind::BrokenPipe => ExitCode::SUCCESS,
         Err(e) => {
-            let _ = writeln!(std::io::stderr().lock(), "pdfcraft-cli: {e}");
+            let _ = writeln!(std::io::stderr().lock(), "xueluopdf-cli: {e}");
             ExitCode::FAILURE
         }
     }
@@ -730,7 +730,7 @@ fn run(args: &[String]) -> Result<(), CliError> {
         }
         return Ok(());
     }
-    let tool = *positional(args).first().ok_or("run: missing tool name (see `pdfcraft-cli tools`)")?;
+    let tool = *positional(args).first().ok_or("run: missing tool name (see `xueluopdf-cli tools`)")?;
     let mut obj = serde_json::Map::new();
     for kv in positional(args).iter().skip(1) {
         let (k, v) = kv.split_once('=').ok_or(format!("run: expected key=value, got {kv:?}"))?;
@@ -748,7 +748,7 @@ fn mcp(args: &[String]) -> Result<(), CliError> {
     let mut server = pdfcraft_automation::mcp::McpServer::new(automation(args)?).with_compact(compact);
     let _ = writeln!(
         std::io::stderr().lock(),
-        "pdfcraft-cli: MCP server on stdio (protocol {}{}); close stdin to stop",
+        "xueluopdf-cli: MCP server on stdio (protocol {}{}); close stdin to stop",
         pdfcraft_automation::mcp::PROTOCOL_VERSIONS[0],
         if compact { ", compact tool list" } else { "" }
     );
