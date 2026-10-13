@@ -1,6 +1,8 @@
 *~
 plan/
 /target
+# A second build directory (for example the +crt-static release build) is still build output.
+/target-*
 /dist
 /corpus
 /log

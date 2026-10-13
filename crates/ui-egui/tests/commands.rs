@@ -527,7 +527,6 @@ fn command_w_still_closes_the_document_tab_on_macos() {
 fn palette_ime_output_requests_interrupt(h: &Harness<'_, XueLuoPDFApp>, phase: &str) -> bool {
     assert!(h.state().palette_open, "palette closed during {phase}");
     let ime = h.output().platform_output.ime.as_ref().expect("focused palette advertises IME");
-    eprintln!("{phase}: query={:?}; should_interrupt_composition={}", h.state().palette_query, ime.should_interrupt_composition);
     ime.should_interrupt_composition
 }
 
